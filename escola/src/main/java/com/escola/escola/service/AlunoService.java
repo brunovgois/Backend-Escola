@@ -24,10 +24,6 @@ public class AlunoService {
         return alunoRepository.findByActive(1);
     }
 
-    public List<Aluno> getAlunosInativos() {
-        return alunoRepository.findByActive(0);
-    }
-
     public Optional<AlunoDTO> getAlunoById(Integer id) {
         return alunoRepository.findById(id).map(AlunoMapper::toAlunoDTO);
     }

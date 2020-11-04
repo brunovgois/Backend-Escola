@@ -18,25 +18,20 @@ public class AlunoController {
     @Autowired
     private AlunoService alunoService;
 
-    @PostMapping
-    public ResponseEntity<AlunoDTO> criarAluno(@RequestBody AlunoDTO alunoDTO) {
-        return alunoService.criaAluno(alunoDTO)
-                .map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.badRequest().build());
-    }
-
     @GetMapping
     public ResponseEntity<List<Aluno>> getAlunos() {
         return new ResponseEntity<>(alunoService.getAlunosAtivos(), HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/inativos")
-    public ResponseEntity<List<Aluno>> getAlunosInativos() {
-        return new ResponseEntity<>(alunoService.getAlunosInativos(), HttpStatus.ACCEPTED);
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<AlunoDTO> getAlunoById(@PathVariable Integer id) {
         return alunoService.getAlunoById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public ResponseEntity<AlunoDTO> criarAluno(@RequestBody AlunoDTO alunoDTO) {
+        return alunoService.criaAluno(alunoDTO)
+                .map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
     @PutMapping("/{id}")
