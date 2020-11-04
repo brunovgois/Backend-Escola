@@ -10,11 +10,9 @@ public class Mentoria {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "aluno")
     private Aluno aluno;
 
     @ManyToOne
-    @JoinColumn(name = "mentor")
     private Mentor mentor;
 
     private Integer active;
