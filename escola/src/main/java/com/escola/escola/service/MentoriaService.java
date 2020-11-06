@@ -56,10 +56,9 @@ public class MentoriaService {
         }
     }
 
-
     public Optional<MentoriaDTO> atualizaMentoria(Integer id, MentoriaDTO mentoriaDTO) {
 
-        if (alunoService.getAlunoById(id).isPresent() &&
+        if (alunoService.getAlunoById(mentoriaDTO.getAlunoId()).isPresent() &&
                 mentorService.getMentorById(mentoriaDTO.getMentorId()).isPresent()) {
             mentoriaDTO.setId(id);
             return Optional.of(MentoriaMapper.toMentoriaDTO(mentoriaRepository.save(MentoriaMapper.toMentoria(mentoriaDTO))));
