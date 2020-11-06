@@ -50,17 +50,6 @@ public class MentorService {
         }
     }
 
-    public Optional<MentorDTO> ativaMentor(Integer id) {
-        Optional<Mentor> mentor = mentorRepository.findById(id);
-        if (mentor.isPresent()) {
-            mentor.get().setActive(1);
-            mentoriaService.setMentorActive(1, id);
-            return Optional.of(MentorMapper.toMentorDTO(mentorRepository.save(mentor.get())));
-        } else {
-            return Optional.empty();
-        }
-    }
-
     public Optional<MentorDTO> atualizarMentor(Integer id, MentorDTO mentorDTO) {
         if (getMentorById(id).isPresent()) {
             mentorDTO.setId(id);
