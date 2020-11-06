@@ -56,15 +56,6 @@ public class MentoriaService {
         }
     }
 
-    public Optional<MentoriaDTO> ativaMentoria(Integer id) {
-        Optional<Mentoria> mentoria = mentoriaRepository.findById(id);
-        if (mentoria.isPresent()) {
-            mentoria.get().setActive(1);
-            return Optional.of(MentoriaMapper.toMentoriaDTO(mentoriaRepository.save(mentoria.get())));
-        } else {
-            return Optional.empty();
-        }
-    }
 
     public Optional<MentoriaDTO> atualizaMentoria(Integer id, MentoriaDTO mentoriaDTO) {
 
