@@ -1,6 +1,7 @@
 package com.escola.escola.service;
 
 import com.escola.escola.dto.AlunoDTO;
+import com.escola.escola.exception.ResourceNotFoundException;
 import com.escola.escola.model.Aluno;
 import com.escola.escola.repository.AlunoRepository;
 import com.escola.escola.service.mapper.AlunoMapper;
@@ -25,7 +26,11 @@ public class AlunoService {
     }
 
     public Optional<AlunoDTO> getAlunoById(Integer id) {
-        return alunoRepository.findById(id).map(AlunoMapper::toAlunoDTO);
+        if(alunoIdExiste(id)) {
+            return alunoRepository.findById(id).map(AlunoMapper::toAlunoDTO);
+        } else {
+            throw new ResourceNotFoundException("Student with id " + id + " not found.");
+        }
     }
 
     public Optional<AlunoDTO> criaAluno(AlunoDTO alunoDTO) {
@@ -42,7 +47,7 @@ public class AlunoService {
 
             return Optional.of(AlunoMapper.toAlunoDTO(alunoRepository.save(AlunoMapper.toAluno(alunoDTO))));
         } else {
-            return Optional.empty();
+            throw new ResourceNotFoundException("Student with id" + id + " not found.");
         }
     }
 
@@ -55,8 +60,12 @@ public class AlunoService {
 
             return Optional.of(AlunoMapper.toAlunoDTO(alunoRepository.save(aluno.get())));
         } else {
-            return Optional.empty();
+            throw new ResourceNotFoundException("Student with id " + id + " not found.");
         }
+    }
+
+    private boolean alunoIdExiste(Integer id) {
+        return alunoRepository.existsById(id);
     }
 }
 
