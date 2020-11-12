@@ -11,4 +11,6 @@ import java.util.List;
 public interface AlunoRepository extends CrudRepository<Aluno, Integer> {
     List<Aluno> findByActive(Integer active);
 
+    boolean existsById(Integer id);
+
 }
