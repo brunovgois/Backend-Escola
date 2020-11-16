@@ -1,6 +1,7 @@
 package com.escola.escola.service;
 
 import com.escola.escola.dto.MentorDTO;
+import com.escola.escola.exception.ResourceNotFoundException;
 import com.escola.escola.model.Mentor;
 import com.escola.escola.repository.MentorRepository;
 import com.escola.escola.service.mapper.MentorMapper;
@@ -27,7 +28,11 @@ public class MentorService {
     }
 
     public Optional<MentorDTO> getMentorById(Integer id) {
-        return mentorRepository.findById(id).map(MentorMapper::toMentorDTO);
+        if(mentorIdExiste(id)) {
+            return mentorRepository.findById(id).map(MentorMapper::toMentorDTO);
+        } else {
+            throw new ResourceNotFoundException("Mentor with id " + id + " not found");
+        }
     }
 
 
@@ -45,9 +50,8 @@ public class MentorService {
             mentor.get().setActive(0);
             mentoriaService.setMentorActive(0, id);
             return Optional.of(MentorMapper.toMentorDTO(mentorRepository.save(mentor.get())));
-        } else {
-            return Optional.empty();
-        }
+        } else
+            throw new ResourceNotFoundException("Mentor with id " + id + " not found.");
     }
 
     public Optional<MentorDTO> atualizarMentor(Integer id, MentorDTO mentorDTO) {
@@ -57,7 +61,9 @@ public class MentorService {
 
             return Optional.of(MentorMapper.toMentorDTO(mentorRepository.save(MentorMapper.toMentor(mentorDTO))));
         } else
-            return Optional.empty();
+            throw new ResourceNotFoundException("Mentor with id " + id + "not found");
     }
-
+    private boolean mentorIdExiste(Integer id) {
+        return mentorRepository.existsById(id);
+    }
 }

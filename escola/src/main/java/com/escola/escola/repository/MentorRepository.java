@@ -10,4 +10,7 @@ import java.util.List;
 @Repository
 public interface MentorRepository extends CrudRepository<Mentor, Integer> {
     List<Mentor> findByActive(Integer active);
+
+    boolean existsById(Integer id);
+
 }
