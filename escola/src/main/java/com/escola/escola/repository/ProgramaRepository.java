@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface ProgramaRepository extends CrudRepository<Programa, Integer> {
     List<Programa> findByActive(Integer active);
+
+    boolean existsById(Integer id);
 }

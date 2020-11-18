@@ -1,6 +1,7 @@
 package com.escola.escola.service;
 
 import com.escola.escola.dto.ProgramaDTO;
+import com.escola.escola.exception.ResourceNotFoundException;
 import com.escola.escola.model.Programa;
 import com.escola.escola.repository.ProgramaRepository;
 import com.escola.escola.service.mapper.ProgramaMapper;
@@ -21,7 +22,10 @@ public class ProgramaService {
     }
 
     public Optional<ProgramaDTO> getProgramaById(Integer id) {
-        return programaRepository.findById(id).map(ProgramaMapper::toProgramaDTO);
+        if(programaIdExiste(id)) {
+            return programaRepository.findById(id).map(ProgramaMapper::toProgramaDTO);
+        } else
+            throw new ResourceNotFoundException("Programa with id " + id + " not found");
     }
 
     public Optional<ProgramaDTO> criaPrograma(ProgramaDTO programaDTO) {
@@ -38,7 +42,7 @@ public class ProgramaService {
 
             return Optional.of(ProgramaMapper.toProgramaDTO(programaRepository.save(ProgramaMapper.toPrograma(programaDTO))));
         } else {
-            return Optional.empty();
+            throw new ResourceNotFoundException("Programa with id " + id + " not found");
         }
     }
 
@@ -48,8 +52,11 @@ public class ProgramaService {
         if (programa.isPresent()) {
             programa.get().setActive(0);
             return Optional.of(ProgramaMapper.toProgramaDTO(programaRepository.save(programa.get())));
-        } else {
-            return Optional.empty();
-        }
+        } else
+            throw new ResourceNotFoundException("Programa with id " + id + " not found");
+    }
+
+    private boolean programaIdExiste(Integer id) {
+        return programaRepository.existsById(id);
     }
 }
