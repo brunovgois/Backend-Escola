@@ -1,6 +1,7 @@
 package com.escola.escola.service;
 
 import com.escola.escola.dto.ProvaDTO;
+import com.escola.escola.exception.ResourceNotFoundException;
 import com.escola.escola.model.Prova;
 import com.escola.escola.repository.ProvaRepository;
 import com.escola.escola.service.mapper.ProvaMapper;
@@ -28,7 +29,10 @@ public class ProvaService {
     public List<Prova> getProvasInativas() { return provaRepository.findByActive(0); }
 
     public Optional<ProvaDTO> getProvaById(Integer id) {
-        return provaRepository.findById(id).map(ProvaMapper::toProvaDTO);
+        if(provaIdExiste(id)){
+            return provaRepository.findById(id).map(ProvaMapper::toProvaDTO);
+        } else
+            throw new ResourceNotFoundException("Prova with id " + id + " not found");
     }
 
     public Optional<ProvaDTO> criaProva(ProvaDTO provaDTO) {
@@ -38,7 +42,7 @@ public class ProvaService {
             provaDTO.setActive(1);
             return Optional.of(ProvaMapper.toProvaDTO(provaRepository.save(ProvaMapper.toProva(provaDTO))));
         } else
-            return Optional.empty();
+            throw new ResourceNotFoundException("Mentoria or Programa not found on request body");
     }
 
     public Optional<ProvaDTO> deletaProva(Integer id) {
@@ -47,7 +51,7 @@ public class ProvaService {
             prova.get().setActive(0);
             return Optional.of(ProvaMapper.toProvaDTO(provaRepository.save(prova.get())));
         } else {
-            return Optional.empty();
+            throw new ResourceNotFoundException("Prova with id " + id + " not found");
         }
     }
 
@@ -58,8 +62,12 @@ public class ProvaService {
 
             return Optional.of(ProvaMapper.toProvaDTO(provaRepository.save(ProvaMapper.toProva(provaDTO))));
         } else {
-            return Optional.empty();
+            throw new ResourceNotFoundException("Prova with id " + id + " not found");
         }
+    }
+
+    private boolean provaIdExiste(Integer id) {
+        return provaRepository.existsById(id);
     }
 
 }

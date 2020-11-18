@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface ProvaRepository extends CrudRepository<Prova, Integer> {
     List<Prova> findByActive(Integer active);
+
+    boolean existsById(Integer id);
 }
