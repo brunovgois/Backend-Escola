@@ -23,6 +23,11 @@ public class MentoriaController {
         return mentoriaService.getMentoriasAtivas();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<MentoriaDTO> getMentoriaById(@PathVariable Integer id) {
+        return mentoriaService.getMentoriaById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @GetMapping("/inativos")
     public List<Mentoria> getMentoriasInativas(){
         return mentoriaService.getMentoriasInativas();
