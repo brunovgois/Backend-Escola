@@ -13,6 +13,8 @@ import java.util.List;
 public interface MentoriaRepository extends CrudRepository<Mentoria, Integer> {
     List<Mentoria> findByActive(Integer active);
 
+    boolean existsById(Integer id);
+
     @Modifying
     @Query(value = "update mentoria set active = ?1 where aluno in (select id from aluno where id = ?2)", nativeQuery = true)
     void setActiveByAlunoId(Integer active, Integer id);
