@@ -19,6 +19,11 @@ public class ProvaController {
     @GetMapping
     public List<Prova> getProvas() { return provaService.getProvasAtivas(); }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ProvaDTO> getProvaById(@PathVariable Integer id) {
+        return provaService.getProvaById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @GetMapping("/inativos")
     public List<Prova> getProvasInativas() {return provaService.getProvasInativas(); }
 
