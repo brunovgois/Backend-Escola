@@ -4,7 +4,7 @@ import com.escola.escola.dto.ProvaDTO;
 import com.escola.escola.exception.ResourceNotFoundException;
 import com.escola.escola.model.Prova;
 import com.escola.escola.repository.ProvaRepository;
-import com.escola.escola.service.mapper.ProvaMapper;
+import com.escola.escola.dto.mapper.ProvaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

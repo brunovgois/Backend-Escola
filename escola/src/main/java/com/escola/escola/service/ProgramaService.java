@@ -4,7 +4,7 @@ import com.escola.escola.dto.ProgramaDTO;
 import com.escola.escola.exception.ResourceNotFoundException;
 import com.escola.escola.model.Programa;
 import com.escola.escola.repository.ProgramaRepository;
-import com.escola.escola.service.mapper.ProgramaMapper;
+import com.escola.escola.dto.mapper.ProgramaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

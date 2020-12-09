@@ -4,7 +4,7 @@ import com.escola.escola.dto.MentorDTO;
 import com.escola.escola.exception.ResourceNotFoundException;
 import com.escola.escola.model.Mentor;
 import com.escola.escola.repository.MentorRepository;
-import com.escola.escola.service.mapper.MentorMapper;
+import com.escola.escola.dto.mapper.MentorMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

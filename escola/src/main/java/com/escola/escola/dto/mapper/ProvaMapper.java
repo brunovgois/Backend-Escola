@@ -1,4 +1,4 @@
-package com.escola.escola.service.mapper;
+package com.escola.escola.dto.mapper;
 
 import com.escola.escola.dto.ProvaDTO;
 import com.escola.escola.model.Mentoria;
