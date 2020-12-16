@@ -1,28 +1,14 @@
 package com.escola.escola.dto.mapper;
 
 import com.escola.escola.dto.MentorDTO;
+import com.escola.escola.dto.mapper.decorator.MentorMapperDecorator;
 import com.escola.escola.model.Mentor;
+import org.mapstruct.DecoratedWith;
+import org.mapstruct.Mapper;
 
-public class MentorMapper {
-    public static Mentor toMentor(MentorDTO mentorDTO) {
-        Mentor mentor = new Mentor();
-
-        mentor.setId(mentorDTO.getId());
-        mentor.setName(mentorDTO.getName());
-        mentor.setActive(mentorDTO.getActive());
-        mentor.setCity(mentorDTO.getCity());
-
-        return mentor;
-    }
-
-    public static MentorDTO toMentorDTO(Mentor mentor) {
-        MentorDTO mentorDTO = new MentorDTO();
-
-        mentorDTO.setId(mentor.getId());
-        mentorDTO.setName(mentor.getName());
-        mentorDTO.setActive(mentor.getActive());
-        mentorDTO.setCity(mentor.getCity());
-
-        return mentorDTO;
-    }
+@Mapper(componentModel = "spring")
+@DecoratedWith(MentorMapperDecorator.class)
+public interface MentorMapper {
+    Mentor toMentor(MentorDTO mentorDTO);
+    MentorDTO toMentorDTO(Mentor mentor);
 }
