@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -57,13 +58,16 @@ public class AlunoService {
         }
     }
 
+    @Transactional
     public Optional<AlunoDTO> deletaAluno(Integer id) {
         Optional<Aluno> aluno = alunoRepository.findById(id);
 
         if (aluno.isPresent()) {
             aluno.get().setActive(0);
 
-            mentoriaService.setAlunoActive(0, id);
+//            mentoriaService.setAlunoActive(0, id);
+//TODO checar se aluno esta em alguma mentoria antes de desativa-lo
+            
 
             return Optional.of(mapper.toAlunoDTO(alunoRepository.save(aluno.get())));
         } else {
